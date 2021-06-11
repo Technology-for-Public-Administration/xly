@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>四川大学公共管理学院夏令营信息采集系统v1.0</title>
+    <link rel="shortcut icon" href="http://scu.edu.cn/images/favicon.png">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="http://121.4.151.208:5001/static/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="http://121.4.151.208:5001/static/css/style.css"> <!-- Resource style -->
+    <script src="http://121.4.151.208:5001/static/js/modernizr.js"></script> <!-- Modernizr -->
+</head>
+<body>
+<header><h2>四川大学公共管理学院夏令营信息采集系统v1.0</h2></header>
+<section class="cd-faq">
+    <ul class="cd-faq-categories">
+        <li><a class="selected" href="#info">信息列表</a></li>
+        <li><a href="#list">院校列表</a></li>
+        <li><a href="#status">系统状态</a></li>
+        <li><a href="#add-quick">快捷添加</a></li>
+        <li><a href="#add-dept">添加院校</a></li>
+        <li><a href="#select-dept">查询订阅</a></li>
+        <li><a href="#item">免责条款</a></li>
+    </ul> <!-- cd-faq-categories -->
+
+    <div class="cd-faq-items">
+        <ul id="info" class="cd-faq-group">
+        </ul> <!-- cd-faq-group -->
+
+        <ul id="list" class="cd-faq-group">
+            <li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>院校列表</h2></li>
+
+            <table class="table table-hover" style="color: grey;">
+                <thead style="color: #000; text-decoration: underline;">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">院校</th>
+                    <th scope="col">链接</th>
+                    <th scope="col">命中次数</th>
+                    <th scope="col">最近一次扫描</th>
+                </tr>
+                </thead>
+                <tbody id="list_body">
+                </tbody>
+            </table>
+
+        </ul> <!-- cd-faq-group -->
+
+        <ul id="status" class="cd-faq-group">
+            <li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>系统状态</h2></li>
+            <ul style="color: grey;">
+                <li><span style="color: #000">当前正在扫描：</span><span id="scaning"
+                                                                  style="text-decoration: underline;"></span>&nbsp;&nbsp;<a
+                        href="#status" style="color: blue;"><i id="stat" class="fa fa-refresh fa-spin"
+                                                               title="点击刷新状态"></i></a></li>
+                <li>&nbsp;&nbsp;</li>
+                <li><span style="color: #000">系统当前时间：</span><span id="time"></span></li>
+            </ul> <!-- cd-faq-content -->
+        </ul> <!-- cd-faq-group -->
+
+        <ul id="add-quick" class="cd-faq-group">
+            <li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>快捷添加</h2></li>
+            <div>
+
+                <table class="table table-hover" style="color: grey;">
+                    <thead style="color: #000; text-decoration: underline;">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">名称</th>
+                        <th scope="col">官网</th>
+                        <th scope="col">No.</th>
+                        <th scope="col">名称</th>
+                        <th scope="col">官网</th>
+                    </tr>
+                    </thead>
+                    <tbody id="depts_body">
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"><span
+                            style="color: #000">*手机号</span></label>
+                    <input type="text" class="form-control" id="phone" aria-describedby="emailHelp"
+                           placeholder="请输入11位手机号">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label"><span
+                            style="color: #000">*邀请码</span></label>
+                    <input type="text" class="form-control" id="phone-code" placeholder="请输入6位邀请码">
+                </div>
+                <div class="mb-3">
+                    <input class="form-check-input" type="radio" name="agree" id="flexRadioDefault1" value="agree"><span
+                        style="color:grey">&nbsp;我已阅读本页底部免责条款，并充分同意</span>
+                    <span id="warnning2" style="color: red;"></span>&nbsp;&nbsp;<span id="success2"
+                                                                                      style="color: green;"></span>
+                </div>
+                <button id="submit2" type="submit" class="btn btn-primary">快速批量添加</button>
+            </div>
+        </ul> <!-- cd-faq-group -->
+        <ul id="signup" class="cd-faq-group">
+            <li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>添加院校</h2></li>
+            <div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label"><span
+                            style="color: #000">*院校名称</span></label>
+                    <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
+                           placeholder="不得长于4个字符，如'四川大学公共管理学院'应缩写为'川大公管'">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label"><span
+                            style="color: #000">*官网主页</span></label>
+                    <input type="text" class="form-control" id="website"
+                           placeholder="一般是学院官网。若网址最后一个字符为/，请删掉">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label"><span
+                            style="color: #000">*邀请码</span></label>
+                    <input type="password" class="form-control" id="pswd" placeholder="6位密钥，必填">
+                </div>
+                <div class="mb-3">
+                    <button id="submit" type="submit" class="btn btn-primary">立即添加</button>
+                    <span
+                            id="warnning" style="color: red;"></span>&nbsp;&nbsp;<span id="success"
+                                                                                       style="color: green;"></span>
+                </div>
+
+        </ul> <!-- cd-faq-group -->
+
+        <ul id="select-dept" class="cd-faq-group">
+            <li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>查询订阅</h2></li>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="phone-select" aria-describedby="emailHelp"
+                       placeholder="请输入11位手机号,然后点击查询按钮~">
+            </div>
+            <div class="mb-3">
+                <button id="submit3" type="submit" class="btn btn-primary">查询</button>
+                <span
+                        id="warnning3" style="color: red;"></span>&nbsp;&nbsp;<span id="success3"
+                                                                                    style="color: green;"></span>
+            </div>
+            <table class="table table-hover" style="color: grey;">
+                <thead style="color: #000; text-decoration: underline;">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">院校</th>
+                    <th scope="col">链接</th>
+                    <th scope="col">命中次数</th>
+                    <th scope="col">最近一次扫描</th>
+                </tr>
+                </thead>
+                <tbody id="list_body1">
+                </tbody>
+            </table>
+
+        </ul> <!-- cd-faq-group -->
+        <ul id="item" class="cd-faq-group">
+            <li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>免责条款</h2></li>
+            <div style="color: #000">
+                <ul>
+                    <li style="color: grey">&nbsp;&nbsp;1. 使用本系统任何一条信息均代表您同意本条款；</li>
+                    <li style="color: grey">&nbsp;&nbsp;2. 本系统所有信息均从互联网采集而得，故不对原文内容的有效性与正确性负责；</li>
+                    <li style="color: grey">&nbsp;&nbsp;3. 本系统仅向本院订阅该信息流的学生推送，欲订阅请联系相关负责人获取邀请码；</li>
+                    <li style="color: grey">&nbsp;&nbsp;4. 本系统所展示的夏令营信息均为历史发布数据，新增数据会通过短信下发至您的移动设备；</li>
+                    <li style="color: grey">&nbsp;&nbsp;5. 受网络质量、服务器带宽、短信服务接口限制等不可控因素影响，信息流更新可能存在延迟；</li>
+                    <li style="color: grey">&nbsp;&nbsp;6. 本系统保留对该条款的最终解释权。</li>
+                </ul>
+            </div> <!-- cd-faq-content -->
+        </ul> <!-- cd-faq-group -->
+    </div> <!-- cd-faq-items -->
+    <a href="#0" class="cd-close-panel">Close</a>
+</section> <!-- cd-faq -->
+<footer style="color: #000;font-size: 18px; text-align: center;">Copyright © 2021 四川大学公共管理学院</footer>
+<script src="http://121.4.151.208:5001/static/js/jquery-2.1.0.min.js"></script>
+<script src="http://121.4.151.208:5001/static/js/jquery.mobile.custom.min.js"></script>
+<script src="http://121.4.151.208:5001/static/js/main.js"></script> <!-- Resource jQuery -->
+<script type="text/javascript">
+	$.ajax({
+      type : "GET",
+      url : 'http://121.4.151.208:5001/infos',
+      success : function(html){
+         var obj = JSON.parse(html);
+         console.log(obj)
+         var tmp = '<li class="cd-faq-title"><h2 style="font-size: 18px; color: #000"><i class="fa fa-tag"></i>信息列表</h2></li>';
+         for (var i = 0; i < obj.length; i++) {
+         	tmp += '<li><a class="cd-faq-trigger" href="#0" style="font-size: 18px; color: blue" id="a_info">' + obj[i][6] + ' | ' + obj[i][2] + '</a><div class="cd-faq-content"><ul style="list-style-type: none;">';
+         	tmp += '<li style="color: grey">扫描时间：' + obj[i][4] + '</li>';
+         	tmp += '<li style="color: grey">命中次数：' + obj[i][5] + '</li>';
+         	tmp += '<li style="color: grey">原文链接：<span style="color:blue;"><a target="_blank" style="color:blue;" href="' + obj[i][3] + '">' + obj[i][3] + '</a></span></li></ul></div></li>';
+         }
+         $("#info").html(tmp)
+         jQuery.getScript("http://121.4.151.208:5001/static/js/main.js?_=1615972056798")
+ 			.done(function() {
+ 				/* 耶，没有问题，这里可以干点什么 */
+ 			})
+ 			.fail(function() {
+  				/* 靠，马上执行挽救操作 */
+			});
+      }
+    });
+
+
+$.ajax({
+      type : "GET",
+      url : 'http://121.4.151.208:5001/depts',
+      success : function(html){
+         var obj = JSON.parse(html);
+         console.log(obj)
+         var tmp = '';
+         for (var i = 0; i < obj.length / 2; i++) {
+         	tmp += '<tr><td scope="row">' + obj[i * 2][0] + '</td>';
+         	tmp += '<td scope="row"><input class="form-check-input" type="checkbox" value="'+obj[i * 2][0]+'" id="depts">' + obj[i * 2][1] + '</td>';
+         	tmp += '<td scope="row">' + obj[i * 2][2] + '</td>';
+         	if (i * 2 + 1 == obj.length && obj.length % 2 != 0) {
+         	tmp += '</tr>'
+         } else {
+         	tmp += '<td scope="row">' + obj[i * 2 + 1][0] + '</td>';
+         	tmp += '<td scope="row"><input class="form-check-input" type="checkbox" value="'+obj[i * 2 + 1][0]+'" id="depts">' + obj[i * 2 + 1][1] + '</td>';
+         	tmp += '<td scope="row">' + obj[i * 2 + 1][2] + '</td></tr>';
+         }
+
+         }
+         $("#depts_body").html(tmp)
+      }
+    });
+
+    	$.ajax({
+      type : "GET",
+      url : 'http://121.4.151.208:5001/depts',
+      success : function(html){
+         var obj = JSON.parse(html);
+         console.log(obj)
+         var tmp = '';
+         for (var i = 0; i < obj.length; i++) {
+         	tmp += '<tr><td scope="row">' + (i + 1) + '</td>';
+         	tmp += '<td scope="row">' + obj[i][1] + '</td>';
+         	tmp += '<td scope="col">' + obj[i][2] + '</td>';
+         	tmp += '<td scope="col">' + obj[i][4] + '</td>';
+         	tmp += '<td scope="col">' + obj[i][3] + '</td>/tr>';
+         }
+         $("#list_body").html(tmp)
+      }
+    });
+    	$.ajax({
+      type : "GET",
+      url : 'http://121.4.151.208:5001/cur',
+      success : function(html){
+         $("#scaning").text(JSON.parse(html)[1] + ', ' + JSON.parse(html)[2]);
+      }
+    });
+    setInterval(function() {$("#time").text(new Date())},1000)
+    $("#submit").click(function(){
+		$("#warnning").text('');
+		$("#success").text('');
+    	if ($("#name").val().length == 0) {
+		$("#warnning").text('院校名称为空');
+    	} else if ($("#name").val().length > 4) {
+		$("#warnning").text('院校名称不得长于4个字符');
+    	}else if ($("#website").val() == 0 || !(new RegExp("^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*$")).test($("#website").val())){
+		$("#warnning").text('网址格式错误或为空');
+    	}else if (!(new RegExp("^\\d{6}$")).test($("#pswd").val())){
+		$("#warnning").text('密钥格式错误或长度不够');
+    	} else {
+		$("#success").text("请稍等...");
+    		$('#submit').addClass('disabled');
+    		dat = {
+    			'name': $("#name").val(),
+    			'website': $("#website").val(),
+    			'pswd': $("#pswd").val()
+    		};
+			$.post('http://121.4.151.208:5001/add',JSON.stringify(dat),function(ret){
+				if (400 == JSON.parse(ret)['code']) {
+					$("#warnning").text(JSON.parse(ret)['obj']);
+				} else if (200 == JSON.parse(ret)['code']){
+					$("#warnning").text('');
+					$("#success").text(JSON.parse(ret)['obj']);
+				}
+				$('#submit').removeClass('disabled');
+      		})
+		}
+	})
+
+    $("#test").click(function(){
+    	if ($("#website").val() == 0 || !(new RegExp("^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*$")).test($("#website").val())) {
+    $("#success").text("");
+    	$("#warnning").text('网址格式错误或为空');
+    	} else {
+		$("#success").text("请稍等...");
+    	$.post('http://121.4.151.208:5001/test',JSON.stringify({'url':$("#website").val()}),function(ret){
+				if (400 == JSON.parse(ret)['code']) {
+					$("#warnning").text(JSON.parse(ret)['obj']);
+				} else if (200 == JSON.parse(ret)['code']){
+					$("#warnning").text('');
+					$("#success").text(JSON.parse(ret)['obj']);
+				}
+				$('#submit').removeClass('disabled');
+      		})}})
+
+    $("#stat").click(function(){
+    	$.ajax({
+      type : "GET",
+      url : 'http://121.4.151.208:5001/cur',
+      success : function(html){
+         $("#scaning").text(JSON.parse(html)[1] + ', ' + JSON.parse(html)[2]);
+      }
+    });})
+
+        $("#submit2").click(function(){
+    	var chk_value =[];
+        $('input[id="depts"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+		//$("#warnning2").text('');
+		$("#success2").text('');
+		if (chk_value.length == 0) {
+		$("#warnning2").text('未选中任何院校，无法继续');
+		}
+    	else if ($("#phone").val().length == 0) {
+		$("#warnning2").text('手机号不能为空');
+    	} else if ($("#phone").val().length != 11) {
+		$("#warnning2").text('手机号格式有误');
+    	}else if (!(new RegExp("^\\d{6}$")).test($("#phone-code").val())){
+		$("#warnning2").text('邀请码格式错误');
+    	} else if ($('input:radio[name="agree"]:checked').val() != "agree"){
+		$("#warnning2").text('请阅读条款并勾选之');
+	}else {
+		$("#warnning2").text('');
+		$("#success2").text("请稍等...");
+    		dat = {
+    			'phone': $("#phone").val(),
+    			'code': $("#phone-code").val(),
+    			'depts': chk_value
+    		};
+			$.post('http://121.4.151.208:5001/depts',JSON.stringify(dat),function(ret){
+				if (400 == JSON.parse(ret)['code']) {
+					$("#warnning2").text(JSON.parse(ret)['obj']);
+					$("#success2").text('');
+				} else if (200 == JSON.parse(ret)['code']){
+					$("#warnning2").text('');
+					$("#success2").text(JSON.parse(ret)['obj'])
+				}
+      		})
+		}
+	})
+               $("#submit3").click(function(){
+               	if ($("#phone-select").val().length == 0) {
+		$("#warnning3").text('手机号不能为空');
+    	} else if ($("#phone-select").val().length != 11) {
+		$("#warnning3").text('手机号格式有误');
+    	} else {
+		$("#warnning3").text('');
+		$("#success3").text("请稍等...");
+    		dat = {
+    			'phone': $("#phone-select").val()
+    		};
+			$.post('http://121.4.151.208:5001/select',JSON.stringify(dat),function(ret){
+
+         var obj = JSON.parse(ret);
+		$("#success3").text(obj['info']);
+         console.log(obj)
+         var tmp = '';
+         $("#list_body1").html(tmp);
+         for (var i = 0; i < obj['body'].length; i++) {
+         	tmp += '<tr><td scope="row">' + (i + 1) + '</td>';
+         	tmp += '<td scope="row">' + obj['body'][i][1] + '</td>';
+         	tmp += '<td scope="col">' + obj['body'][i][2] + '</td>';
+         	tmp += '<td scope="col">' + obj['body'][i][4] + '</td>';
+         	tmp += '<td scope="col">' + obj['body'][i][3] + '</td>/tr>';
+         }
+         $("#list_body1").html(tmp);
+      		})
+		}
+	})
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
